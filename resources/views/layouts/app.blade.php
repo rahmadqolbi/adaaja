@@ -138,7 +138,13 @@
             <i class="bi bi-plus-circle"></i> Tambah Tugas
         </a>
 
+
         <div class="nav-section">File</div>
+
+        <a href="{{ route('folders.index') }}"
+   class="nav-link {{ request()->routeIs('folders.*') ? 'active' : '' }}">
+    <i class="bi bi-folder2"></i> Folder File
+</a>
 
         <a href="{{ route('files.index') }}"
            class="nav-link {{ request()->routeIs('files.index') ? 'active' : '' }}">
@@ -149,6 +155,11 @@
            class="nav-link {{ request()->routeIs('files.create') ? 'active' : '' }}">
             <i class="bi bi-cloud-upload"></i> Upload File
         </a>
+
+        <a href="{{ route('folders.shared') }}"
+   class="nav-link {{ request()->routeIs('folders.shared') ? 'active' : '' }}">
+    <i class="bi bi-people"></i> Dibagikan ke Saya
+</a>
     </div>
 
     <div class="sidebar-user">

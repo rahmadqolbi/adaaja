@@ -8,10 +8,10 @@ use Illuminate\Support\Facades\Storage;
 
 class WorkFile extends Model
 {
-    protected $fillable = [
-        'user_id', 'original_name', 'stored_name', 'path',
-        'mime_type', 'size', 'description', 'source', 'upload_date',
-    ];
+   protected $fillable = [
+    'user_id', 'folder_id', 'original_name', 'stored_name', 'path',
+    'mime_type', 'size', 'description', 'source', 'upload_date',
+];
 
     protected $casts = [
         'upload_date' => 'date',
@@ -21,6 +21,11 @@ class WorkFile extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function folder(): BelongsTo
+{
+    return $this->belongsTo(Folder::class);
+}
 
     public function getFileSizeHumanAttribute(): string
     {

@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\WorkFileController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\FolderController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn() => redirect()->route('dashboard'));
@@ -13,7 +14,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Profile (bawaan Breeze)
+    // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -25,11 +26,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Files
     Route::resource('files', WorkFileController::class)
-     ->except(['show'])
-     ->parameters(['files' => 'workFile']);
+         ->except(['show'])
+         ->parameters(['files' => 'workFile']);
+    Route::get('files/{workFile}/download', [WorkFileController::class, 'download'])
+         ->name('files.download');
+    Route::patch('files/{workFile}/move', [FolderController::class, 'moveFile'])
+         ->name('files.move');
+Route::get('folders/shared', [FolderController::class, 'shared'])
+     ->name('folders.shared');
+    // Folders
+    Route::resource('folders', FolderController::class);
 
-Route::get('files/{workFile}/download', [WorkFileController::class, 'download'])
-     ->name('files.download');
 });
 
 require __DIR__.'/auth.php';
